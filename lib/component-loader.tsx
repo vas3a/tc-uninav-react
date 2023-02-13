@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react';
-import type { FC } from 'react';
+import { type FC, type ReactNode, useEffect, useRef } from 'react';
 
 import type { NavigationAppProps, TcUniNavFn } from 'universal-navigation/types/src/main';
 import loadUninavLib from './load-uninav-lib'
@@ -10,13 +9,13 @@ export interface NavComponentProps extends NavigationAppProps {
   uniNavUrl: string
 }
 
-export interface ComponentLoaderProps extends NavigationAppProps {
+export interface ComponentLoaderProps extends NavComponentProps {
   placeholderHtml: string
-  uniNavUrl: string
 }
 
 export const ComponentLoader: FC<ComponentLoaderProps> = ({
   placeholderHtml,
+  uniNavUrl,
   ...props
 }) => {
 
@@ -27,7 +26,7 @@ export const ComponentLoader: FC<ComponentLoaderProps> = ({
 
   if (!loadedLib.current && typeof window !== 'undefined') {
     loadedLib.current = true;
-    loadUninavLib(props.uniNavUrl);
+    loadUninavLib(uniNavUrl);
   }
 
   useEffect(() => {
